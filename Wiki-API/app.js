@@ -94,7 +94,33 @@ app.route("/articles/:articleTitle") //경로 주의 / 로 시작!!
 				}						
 			}
 		);
-	});// make sure it's closed
+	})// make sure it's closed when its end ;
+	.patch(function(req, res){
+		Article.updateOne(
+		{title: req.params.articleTitle},			
+		{$set: req.body},
+		function(err){
+			if(!err){
+				res.send("Successfully Updated Article.");
+			}else {
+				res.send(err);
+			}
+		}
+		// {$set: {content:"", title: ""}}} 
+	)
+	})
+	.delete(function(req, res){
+		Article.deleteOne(
+			{title: req.params.articleTitle},
+			function(err){
+				if(!err){
+					res.send ("successfully deleted the corresponding aricle.")
+				} else{
+					res.send (err)
+				}
+			}
+		);
+	});
 
 app.listen(3000, function () {
 	console.log("Server Started on port 3000.");
