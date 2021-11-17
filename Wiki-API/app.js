@@ -69,10 +69,10 @@ app.route("/articles")
 
 ///////////////////////////// Req Targetting Specific Article ///////////////////////////
 //express parameter, 
-app.route("article/:articleTitle")
+app.route("/articles/:articleTitle") //경로 주의 / 로 시작!!
 	.get(function(req,res){
 		Article.findOne(
-			{title: req.params.articleTitle},function(err, foundArticle){ 
+			{title: req.params.articleTitle}, function(err, foundArticle){ 
 			////search conditions in {}, //위와 구별되게 단수의 foundArticle
 			if (foundArticle) {
 				res.send(foundArticle);
@@ -81,7 +81,7 @@ app.route("article/:articleTitle")
 			}
 		});
 	})
-	.put(function(req, res){
+	.put(function(req, res){ //put은 전체를 바꾼다. title만 빼먹으면 제목이 비어버림. 
 		Article.updateOne(
 			{title: req.params.articleTitle},
 			{title: req.body.title, content: req.body.content},
